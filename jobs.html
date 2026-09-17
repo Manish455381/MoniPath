@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoniPath | Find Your Perfect Job</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Your existing pagination + apply button styles remain unchanged */
+        .pagination-container { display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; margin: 2.5rem 0; }
+        .page-btn, .page-num { padding: 10px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: all 0.2s; min-width: 44px; text-align: center; border: 1px solid #d1d5db; background: white; color: #374151; }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; background: #f3f4f6; }
+        .page-btn:hover:not(:disabled), .page-num:hover { background: #6a5cff; color: white; border-color: #6a5cff; transform: translateY(-1px); }
+        .page-num.active { background: #6a5cff; color: white; border-color: #6a5cff; }
+        .ellipsis { padding: 10px 8px; color: #6b7280; pointer-events: none; }
+        .job-card.hidden { display: none !important; }
+
+        .job-apply-btn {
+            display: inline-block; padding: 10px 20px; background: #6a5cff; color: white; border-radius: 8px;
+            font-weight: 600; text-decoration: none; transition: all 0.25s ease; cursor: pointer; border: 1px solid #6a5cff;
+        }
+        .job-apply-btn:hover {
+            background: white; color: #6a5cff; border-color: #6a5cff; transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(106, 92, 255, 0.22);
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header (unchanged) -->
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>MoniPath</span>
+            </a>
+            <nav>
+                <ul class="nav">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="jobs.html" class="nav-link active">Jobs</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<!-- Hero (unchanged) -->
+<section class="hero">
+    <div class="container">
+        <h1>Discover Your Dream Job</h1>
+        <p>Explore <strong>124+</strong> professional opportunities</p>
+        <div class="search-main">
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+                <input type="text" class="search-input" placeholder="Search jobs, companies, skills...">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="jobs-section">
+    <div class="container">
+        <div class="jobs-header">
+            <div>
+                <h2>All Jobs</h2>
+                <p class="results-info"><strong id="totalJobs">124</strong> jobs available — showing page <span id="currentPageDisplay">1</span></p>
+            </div>
+        </div>
+
+        <div class="jobs-grid" id="jobsGrid">
+
+            <!-- Job 1 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job001/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Senior Full Stack Developer</h3>
+                    <p class="job-company">🏢 TechNova Solutions</p>
+                    <div class="job-details"><span class="detail-item">📍 Remote</span><span class="detail-item">💰 $130K–$165K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">React</span><span class="job-tag">Node.js</span><span class="job-tag">TypeScript</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Senior Full Stack Developer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 2 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job002/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Product Designer</h3>
+                    <p class="job-company">🏢 Flowstate Inc</p>
+                    <div class="job-details"><span class="detail-item">📍 San Francisco, CA</span><span class="detail-item">💰 $110K–$145K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Figma</span><span class="job-tag">UI/UX</span><span class="job-tag">Prototyping</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Product Designer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 3 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job003/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">DevOps Engineer</h3>
+                    <p class="job-company">🏢 CloudForge</p>
+                    <div class="job-details"><span class="detail-item">📍 Berlin, Germany</span><span class="detail-item">💰 $115K–$155K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Kubernetes</span><span class="job-tag">AWS</span><span class="job-tag">Terraform</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('DevOps Engineer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 4 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job004/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Data Scientist</h3>
+                    <p class="job-company">🏢 Insight Labs</p>
+                    <div class="job-details"><span class="detail-item">📍 New York, NY</span><span class="detail-item">💰 $120K–$160K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Python</span><span class="job-tag">Machine Learning</span><span class="job-tag">SQL</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Data Scientist')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 5 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job005/400/170" alt=""><span class="job-badge badge-entry">ENTRY</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Junior Frontend Developer</h3>
+                    <p class="job-company">🏢 PixelWave</p>
+                    <div class="job-details"><span class="detail-item">📍 Lisbon, Portugal</span><span class="detail-item">💰 $55K–$80K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">React</span><span class="job-tag">JavaScript</span><span class="job-tag">CSS</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Junior Frontend Developer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 6 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job006/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Backend Engineer (Go)</h3>
+                    <p class="job-company">🏢 GoFast Systems</p>
+                    <div class="job-details"><span class="detail-item">📍 Austin, TX</span><span class="detail-item">💰 $125K–$170K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Go</span><span class="job-tag">Microservices</span><span class="job-tag">Docker</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Backend Engineer (Go)')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 7 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job007/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Mobile Developer (Flutter)</h3>
+                    <p class="job-company">🏢 AppPulse</p>
+                    <div class="job-details"><span class="detail-item">📍 Warsaw, Poland</span><span class="detail-item">💰 $90K–$130K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Flutter</span><span class="job-tag">Dart</span><span class="job-tag">iOS</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Mobile Developer (Flutter)')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 8 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job008/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">AI/ML Research Engineer</h3>
+                    <p class="job-company">🏢 NeuralEdge AI</p>
+                    <div class="job-details"><span class="detail-item">📍 London, UK</span><span class="detail-item">💰 $145K–$195K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">PyTorch</span><span class="job-tag">LLM</span><span class="job-tag">Deep Learning</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('AI/ML Research Engineer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 9 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job009/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Cybersecurity Analyst</h3>
+                    <p class="job-company">🏢 SecureNet</p>
+                    <div class="job-details"><span class="detail-item">📍 Singapore</span><span class="detail-item">💰 $95K–$135K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">SIEM</span><span class="job-tag">Penetration Testing</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Cybersecurity Analyst')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 10 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job010/400/170" alt=""><span class="job-badge badge-entry">ENTRY</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Software Support Engineer</h3>
+                    <p class="job-company">🏢 HelpFlow</p>
+                    <div class="job-details"><span class="detail-item">📍 Remote</span><span class="detail-item">💰 $50K–$75K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Customer Support</span><span class="job-tag">Troubleshooting</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Software Support Engineer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 11 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job011/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Engineering Manager</h3>
+                    <p class="job-company">🏢 ScaleWorks</p>
+                    <div class="job-details"><span class="detail-item">📍 Toronto, Canada</span><span class="detail-item">💰 $160K–$210K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Leadership</span><span class="job-tag">Agile</span><span class="job-tag">Team Building</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Engineering Manager')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 12 -->
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job012/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">UX Researcher</h3>
+                    <p class="job-company">🏢 UserPulse</p>
+                    <div class="job-details"><span class="detail-item">📍 Stockholm, Sweden</span><span class="detail-item">💰 $100K–$140K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">User Interviews</span><span class="job-tag">Usability Testing</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('UX Researcher')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- Job 13 to Job 30 – continuing the pattern with variety -->
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job013/400/170" alt=""><span class="job-badge badge-entry">ENTRY</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Content Writer</h3>
+                    <p class="job-company">🏢 StoryForge</p>
+                    <div class="job-details"><span class="detail-item">📍 Remote</span><span class="detail-item">💰 $45K–$70K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">SEO</span><span class="job-tag">Copywriting</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Content Writer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job014/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Sales Development Representative</h3>
+                    <p class="job-company">🏢 LeadRocket</p>
+                    <div class="job-details"><span class="detail-item">📍 Dubai, UAE</span><span class="detail-item">💰 $65K–$95K + commission</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Cold Calling</span><span class="job-tag">CRM</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Sales Development Representative')">Apply Now →</span>
+                </div>
+            </div>
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job015/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Solutions Architect</h3>
+                    <p class="job-company">🏢 CloudPrime</p>
+                    <div class="job-details"><span class="detail-item">📍 Sydney, Australia</span><span class="detail-item">💰 $150K–$200K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">AWS</span><span class="job-tag">Azure</span><span class="job-tag">Solutions Design</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Solutions Architect')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- ... continuing similarly up to job 30 ... -->
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job028/400/170" alt=""><span class="job-badge badge-entry">ENTRY</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">QA Engineer</h3>
+                    <p class="job-company">🏢 TestPeak</p>
+                    <div class="job-details"><span class="detail-item">📍 Krakow, Poland</span><span class="detail-item">💰 $50K–$75K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Selenium</span><span class="job-tag">Cypress</span><span class="job-tag">Manual Testing</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('QA Engineer')">Apply Now →</span>
+                </div>
+            </div>
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job029/400/170" alt=""><span class="job-badge badge-mid">MID</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Growth Marketing Manager</h3>
+                    <p class="job-company">🏢 GrowthHub</p>
+                    <div class="job-details"><span class="detail-item">📍 Dubai, UAE</span><span class="detail-item">💰 $85K–$125K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Paid Ads</span><span class="job-tag">Analytics</span><span class="job-tag">SEO</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Growth Marketing Manager')">Apply Now →</span>
+                </div>
+            </div>
+
+            <div class="job-card">
+                <div class="job-image"><img src="https://picsum.photos/seed/job030/400/170" alt=""><span class="job-badge badge-senior">SENIOR</span></div>
+                <div class="job-content">
+                    <h3 class="job-title">Cloud Security Architect</h3>
+                    <p class="job-company">🏢 SkySecure</p>
+                    <div class="job-details"><span class="detail-item">📍 Singapore</span><span class="detail-item">💰 $160K–$220K</span></div>
+                    <p class="job-type">Full Time</p>
+                    <div class="job-tags"><span class="job-tag">Cloud Security</span><span class="job-tag">Compliance</span><span class="job-tag">Zero Trust</span></div>
+                    <span class="job-apply-btn" onclick="openApplyModal('Cloud Security Architect')">Apply Now →</span>
+                </div>
+            </div>
+
+            <!-- You can keep adding more (31+) if you want totalJobs > 30 -->
+
+        </div>
+
+        <!-- Pagination (unchanged) -->
+        <div class="pagination-section">
+            <div class="container">
+                <div class="pagination-container" id="pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="applyModal" class="modal" style="display:none;">
+    <div class="modal-content">
+        <span class="modal-close" onclick="closeModal()">×</span>
+        <h2>Apply for <span id="jobTitle">this position</span></h2>
+        <form id="applyForm" class="apply-form">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number">
+            <input type="file" name="resume" accept=".pdf,.doc,.docx">
+            <textarea placeholder="Cover Letter / Why should we hire you?" rows="5"></textarea>
+            <button type="submit" class="btn-primary">Submit Application</button>
+        </form>
+    </div>
+</div>
+
+<!-- Footer + Modal (unchanged from your last version) -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>MoniPath</h4>
+                <p>Professional job portal connecting talent with opportunity.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Browse Jobs</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="apply.html">Apply</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Info</h4>
+                    <p>📧 monipath@gmail.com</p>
+                    <p>📞 9800000000</p>
+                    <p>🌐 www.monipath.com</p>
+            </div>
+        </div>
+
+        <div id="applyModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <span class="modal-close" onclick="closeModal()">×</span>
+                <h2>Apply for <span id="jobTitle">this position</span></h2>
+                <form id="applyForm" class="apply-form">
+                    <input type="text" placeholder="Full Name" required>
+                    <input type="email" placeholder="Email Address" required>
+                    <input type="tel" placeholder="Phone Number">
+                    <input type="file" name="resume" accept=".pdf,.doc,.docx">
+                    <textarea placeholder="Cover Letter / Why should we hire you?" rows="5"></textarea>
+                    <button type="submit" class="btn-primary">Submit Application</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 MoniPath. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<script>
+// Your existing pagination + modal script (unchanged)
+const JOBS_PER_PAGE = 10;
+const jobCards = document.querySelectorAll('.job-card');
+const totalJobs = jobCards.length;
+const totalPages = Math.ceil(totalJobs / JOBS_PER_PAGE);
+
+document.getElementById('totalJobs').textContent = totalJobs;
+
+let currentPage = 1;
+
+function showPage(page) {
+    if (page < 1 || page > totalPages) return;
+    currentPage = page;
+    jobCards.forEach((card, index) => {
+        const cardPage = Math.floor(index / JOBS_PER_PAGE) + 1;
+        card.classList.toggle('hidden', cardPage !== page);
+    });
+    document.getElementById('currentPageDisplay').textContent = currentPage;
+    renderPagination();
+}
+
+function renderPagination() {
+    const container = document.getElementById('pagination');
+    container.innerHTML = '';
+    const prev = document.createElement('button');
+    prev.className = 'page-btn';
+    prev.textContent = '← Previous';
+    prev.disabled = currentPage === 1;
+    prev.onclick = () => showPage(currentPage - 1);
+    container.appendChild(prev);
+
+    const maxVisible = 5;
+    let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+    let end = Math.min(totalPages, start + maxVisible - 1);
+    if (end - start + 1 < maxVisible) start = Math.max(1, end - maxVisible + 1);
+
+    if (start > 1) {
+        const first = document.createElement('button');
+        first.className = 'page-num'; first.textContent = '1'; first.onclick = () => showPage(1);
+        container.appendChild(first);
+        if (start > 2) {
+            const dots = document.createElement('span'); dots.className = 'ellipsis'; dots.textContent = '...';
+            container.appendChild(dots);
+        }
+    }
+
+    for (let i = start; i <= end; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'page-num' + (i === currentPage ? ' active' : '');
+        btn.textContent = i; btn.onclick = () => showPage(i);
+        container.appendChild(btn);
+    }
+
+    if (end < totalPages) {
+        if (end < totalPages - 1) {
+            const dots = document.createElement('span'); dots.className = 'ellipsis'; dots.textContent = '...';
+            container.appendChild(dots);
+        }
+        const last = document.createElement('button');
+        last.className = 'page-num'; last.textContent = totalPages; last.onclick = () => showPage(totalPages);
+        container.appendChild(last);
+    }
+
+    const next = document.createElement('button');
+    next.className = 'page-btn'; next.textContent = 'Next →';
+    next.disabled = currentPage === totalPages;
+    next.onclick = () => showPage(currentPage + 1);
+    container.appendChild(next);
+}
+
+showPage(1);
+
+function openApplyModal(jobTitle) {
+    document.getElementById('jobTitle').textContent = jobTitle;
+    const modal = document.getElementById('applyModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+function closeModal() {
+    const modal = document.getElementById('applyModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 400);
+}
+
+document.getElementById('applyModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+document.getElementById('applyForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Application submitted! (This is a demo)');
+    closeModal();
+});
+</script>
+<script>
+function openApplyModal(jobTitle) {
+    document.getElementById('jobTitle').textContent = jobTitle;
+    const modal = document.getElementById('applyModal');
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+function closeModal() {
+    const modal = document.getElementById('applyModal');
+    modal.classList.remove('show');
+    setTimeout(() => modal.style.display = 'none', 300);
+}
+
+document.getElementById('applyModal')?.addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+});
+
+document.getElementById('applyForm')?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    // ────────────────────────────────────────────────
+    //    Here you can later add real sending logic
+    // ────────────────────────────────────────────────
+    alert('Application submitted successfully! (demo mode)');
+    closeModal();
+    this.reset();
+});
+</script>
+</body>
+</html>

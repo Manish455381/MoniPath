@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MoniPath | About Us</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5n/N0ZDv4=" crossorigin=""/>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        (function(){
+            emailjs.init("31XMK4CNmoe9w-OXY");
+        })();
+    </script>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>MoniPath</span>
+            </a>
+            <nav>
+                <ul class="nav">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="jobs.html" class="nav-link">Jobs</a></li>
+                    <li><a href="about.html" class="nav-link active">About</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</header>
+
+<section class="section">
+    <div class="container"><br>
+        <h2 align="center"><font size="7">👨‍💻 About Us</font></h2>
+        <div class="about-members">
+            <div class="about-member">
+                <img src="1.png" alt="Manish Dhakal">
+                <h3>Manish Dhakal</h3><br>
+                <h4><font color="blue">Founder</font></h4>
+            </div>
+        </div>
+    </div>
+</section><br><br>
+
+<section class="section" id="contact">
+    <div class="container">
+        <h2 align="center">📧 Contact Us</h2>
+        <p align="center">Send us a message:</p>
+
+        <!-- Flex container: form on left, map + contact info on right -->
+        <div style="display: flex; flex-wrap: wrap; gap: 2.5rem; justify-content: center; max-width: 1200px; margin: 2.5rem auto 0;">
+            
+            <!-- Contact Form (your original) -->
+            <div style="flex: 1; min-width: 340px; max-width: 500px;">
+                <form class="contact-card" id="contact-form">
+                    <input type="text" name="name" placeholder="Your Name" required>
+                    <input type="email" name="email" placeholder="Your Email" required>
+                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+
+            <!-- Right side: Map + phone + email -->
+            <div style="flex: 1; min-width: 340px; max-width: 500px; display: flex; flex-direction: column; gap: 1.8rem;">
+                
+                <!-- Map -->
+                <div style="height: 320px; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 20px rgba(0,0,0,0.08);">
+                    <div id="hqMap" style="height: 100%; width: 100%;"></div>
+                </div>
+
+                <!-- Contact details below map -->
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; border: 1px solid #e5e7eb; text-align: center;">
+                    <p style="margin: 0.6rem 0; font-size: 1.05rem;">
+                        <strong>Phone:</strong> <a href="tel:+9779768010034" style="color: #0066cc;">9768010034</a>
+                    </p>
+                    <p style="margin: 0.6rem 0; font-size: 1.05rem;">
+                        <strong>Email:</strong> <a href="mailto:manishdhakal01@gmail.com" style="color: #0066cc;">manishdhakal01@gmail.com</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.getElementById("contact-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+    emailjs.sendForm("service_pas", "template_dxa0xrn", this)
+        .then(function() {
+            alert("✅ Message sent successfully!");
+            document.getElementById("contact-form").reset();
+        }, function(error) {
+            alert("❌ Failed to send message");
+            console.error("EmailJS Error:", error);
+        });
+});
+</script>
+
+<button id="scrollTopBtn" onclick="topFunction()">↑</button>
+<script>
+    let mybutton = document.getElementById("scrollTopBtn");
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+        if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+    function topFunction() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+</script>
+
+<!-- Leaflet JS + Map script -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<script>
+// Simple map centered on Kathmandu (adjust coordinates if needed)
+document.addEventListener("DOMContentLoaded", function() {
+    var map = L.map('hqMap').setView([27.7172, 85.3240], 15); // Kathmandu
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    L.marker([27.7172, 85.3240]).addTo(map)
+        .bindPopup("<b>MoniPath</b><br>Kathmandu, Nepal")
+        .openPopup();
+
+    map.scrollWheelZoom.disable(); // Prevent accidental zoom on scroll
+});
+</script>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>MoniPath</h4>
+                <p>Premium job portal connecting exceptional talent with world-class opportunities</p>
+            </div>
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Browse Jobs</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="apply.html">Apply</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>For Employers</h4>
+                <ul>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Browse Talent</a></li>
+                    <li><a href="#">Enterprise Plan</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li>📧 monipath@gmail.com</li>
+                    <li>📞 9800000000</li>
+                    <li>🌐 www.monipath.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MoniPath. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply | MoniPath</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">M</div>
+                <span>MoniPath</span>
+            </a>
+
+            <nav>
+                <ul class="nav">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="jobs.html" class="nav-link">Jobs</a></li>
+                   
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                </ul>
+            </nav>
+
+
+        </div>
+    </div>
+</header>
+
+<section class="apply-section">
+    <div class="container"><br>
+        <h1 align="center"><font size="7">Job Application💼</font></h1>
+
+        <form class="apply-form">
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="tel" placeholder="Phone Number">
+            <input type="file" name="resume"placeholder=" Attach CV / Document ">
+            <textarea placeholder="Cover Letter"></textarea>
+            <button type="submit" class="btn-primary">Submit Application</button>
+        </form>
+    </div>
+</section>
+<h1 align="center"><font size="7">Job Application</font></h1>
+<h2 align="center" id="job-heading">Please fill the form below</h2>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h4>MoniPath</h4>
+                <p>Premium job portal connecting exceptional talent with world-class opportunities</p>
+            </div>
+            <div class="footer-section">
+                <h4>Platform</h4>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="jobs.html">Browse Jobs</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="apply.html">Apply</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>For Employers</h4>
+                <ul>
+                    <li><a href="#">Post a Job</a></li>
+                    <li><a href="#">Browse Talent</a></li>
+                    <li><a href="#">Enterprise Plan</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <ul>
+                    <li>📧 monipath@gmail.com</li>
+                    <li>📞 9800000000</li>
+                    <li>🌐 www.monipath.com</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 MoniPath. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const params = new URLSearchParams(window.location.search);
+    const job = params.get("job");
+    if (job) {
+        document.querySelector("h1").innerHTML = `Apply for<br><strong>${decodeURIComponent(job)}</strong>`;
+    }
+});
+</script>
+</body>
+</html>
